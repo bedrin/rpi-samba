@@ -5,11 +5,7 @@ CONFIG_FILE="/etc/samba/smb.conf"
 initialized=`getent passwd |grep -c '^smbuser:'`
 
 hostname=`hostname`
-set -e
-if [ $initialized = "0" ]; then
-  adduser smbuser -SHD
-
-  cat >"$CONFIG_FILE" <<EOT
+cat >"$CONFIG_FILE" <<EOT
 [global]
 workgroup = WORKGROUP
 netbios name = $hostname
@@ -122,6 +118,6 @@ EOH
     esac
   done
 
-fi
+
 nmbd -D
 exec ionice -c 3 smbd -FS --configfile="$CONFIG_FILE" < /dev/null
