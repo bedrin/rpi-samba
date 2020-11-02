@@ -6,7 +6,7 @@ RUN apk update && apk upgrade && apk add bash samba-common-tools samba && rm -rf
 ARG UGID=1000
 
 RUN addgroup -g $UGID smbuser && \
-    adduser -S -u $UGID -G smbuser smbuser
+    adduser -SHD -u $UGID -G smbuser smbuser
 
 COPY run.sh /run.sh
 RUN chmod u+x /run.sh
