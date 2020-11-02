@@ -67,9 +67,10 @@ EOH
         ;;
       u)
         echo -n "Add user "
-        IFS=: read username password <<<"$OPTARG"
+        IFS=: read username password group uid gid <<<"$OPTARG"
         echo -n "'$username' "
-        adduser "$username" -SHD
+        addgroup -g $gid $group
+        adduser -SHD -u $uid -G $group $username
         echo -n "with password '$password' "
         echo "$password" |tee - |smbpasswd -s -a "$username"
         echo "DONE"
